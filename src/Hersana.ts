@@ -15,7 +15,6 @@ export class Hersana {
     static CONSTANTS: Record<HersanaConstants, any> = {
         DEVELOPER_SNOWFLAKE: "697045706988322826",
         DISCORD_CLIENT_TOKEN: require("../resources/internal.config.json").token,
-        INTERNAL_CONFIG_RESOURCE_PATH: "./resources/internal.config.json",
         KEYV_SQLITE_PATH: "sqlite://resources/store/database.sqlite"
     }
 
@@ -61,5 +60,4 @@ export class Hersana {
 type HersanaConstants =
     | "DEVELOPER_SNOWFLAKE"
     | "DISCORD_CLIENT_TOKEN"
-    | "INTERNAL_CONFIG_RESOURCE_PATH"
     | "KEYV_SQLITE_PATH"
