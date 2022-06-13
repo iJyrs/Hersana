@@ -1,10 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Interaction, MessageEmbed } from "discord.js";
-import {ActionCache} from "../etc/ActionCache";
-
-interface CommandOptions {
-    asanaEnabled: boolean
-}
+import { ActionManager } from "../etc/ActionManager";
+import { Interaction } from "discord.js";
+import { Session } from "../../session/Session";
 
 export abstract class Command {
 
@@ -13,23 +10,14 @@ export abstract class Command {
     options: CommandOptions;
 
     private _cachedExport?: SlashCommandBuilder;
-    protected readonly actionCache: ActionCache = new ActionCache();
 
-    protected constructor(name: string, description: string, options: CommandOptions = { asanaEnabled: false }) {
+    protected constructor(name: string, description: string, options?: CommandOptions) {
         this.name = name;
         this.description = description;
         this.options = options;
     }
 
-    abstract execute(interaction: Interaction, userData?: any): any;
-
-    static generateErrorEmbed(message: string) {
-        return new MessageEmbed()
-            .setColor('#c70d0d')
-            .setTitle('Hersana • Error')
-            .setDescription(message)
-            .setFooter({text: "© 2022 Meturum Solutions LLC"})
-    }
+    abstract execute(action: Interaction, session?: Session): CommandExecutionResponse|void;
 
     render(): SlashCommandBuilder {
         if(this._cachedExport === undefined) {
@@ -74,4 +62,13 @@ export abstract class Command {
         return this.exportArray(commands);
     }
 
+}
+
+type CommandOptions = {
+    sessionRequired?: boolean
+    asanaRequired?: boolean
+}
+
+export type CommandExecutionResponse = {
+    deferSessionClose?: boolean
 }

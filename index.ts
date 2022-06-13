@@ -1,10 +1,9 @@
-import Logger from "./src/utils/Logger";
-const packageJson = require("./package.json");
+import { Logger } from "./src/utils/system/Logger";
+import { version } from "./package.json";
 
-Logger.info("Starting Hersana@v"+packageJson.version+"...");
-
-import Config from "./src/utils/conf/Config";
-Config.ABS_DIR_PATH = __dirname;
+Logger.info("Starting Hersana@v"+version+"...")
 
 import { Hersana } from "./src/Hersana";
+
 Hersana.getInstance();
+
